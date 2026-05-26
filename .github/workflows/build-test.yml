@@ -1,0 +1,25 @@
+name: Build Helium test artifact
+
+on:
+  push:
+    branches:
+      - main
+      - test-dynamic-theme
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Helium test artifact
+    strategy:
+      matrix:
+        arch: [arm64]
+      fail-fast: false
+      max-parallel: 1
+    uses: ./.github/workflows/building.yml
+    secrets: inherit
+    with:
+      arch: ${{ matrix.arch }}
+      os: macos-latest
